@@ -3,13 +3,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Rocket, Wrench, Phone, Layers, Cpu } from "lucide-react";
 import * as motion from "framer-motion/client";
+import TopNavBar from "@/components/TopNavBar"; // <-- Import the TopNavBar
 
 // Placeholder AI photo URLs (replace with your own AI-generated images if desired)
 const aiPhotos = {
   product: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=400",
   service: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=400&h=400",
-  engineer: "https://images.generated.photos/5e6b7e7e7e7e7e7e7e7e7e7e/face.jpg",
-  contact: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=400&h=400",
+  engineer: "Pritam.png",
+  contact: "vikky.png",
 };
 
 function ProductsSection() {
@@ -96,8 +97,8 @@ function ContactSection() {
             <Phone className="text-pink-300" /> Contact
           </div>
           <div className="text-lg mt-2">
-            Email: <a href="mailto:info@example.com" className="underline text-pink-200">info@example.com</a><br />
-            Phone: <span className="text-pink-200">+1 234 567 890</span>
+            Email: <a href="mailto:info@example.com" className="underline text-pink-200">info@vavtronics.com</a><br />
+            Phone: <span className="text-pink-200">+91 9876543210</span>
           </div>
           <Button className="bg-pink-500 hover:bg-pink-600 rounded-full px-6 py-2 text-white text-md mt-2">
             <Rocket className="mr-2 h-4 w-4" /> Get in Touch
@@ -110,29 +111,33 @@ function ContactSection() {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-700 flex flex-col items-center justify-center p-4 gap-8">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full max-w-4xl flex flex-col gap-8"
-      >
+    <>
+      <TopNavBar />
+      <div className="min-h-screen bg-gradient-to-br from-indigo-600 to-purple-700 flex flex-col items-center justify-center p-4 gap-8 pt-20">
         <motion.div
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          className="text-4xl font-bold tracking-tight flex items-center justify-center gap-2 text-white mb-4"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-4xl flex flex-col gap-8"
         >
-          <Sparkles className="text-yellow-400 animate-pulse" />
-          Welcome!
+          <motion.div
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            className="text-4xl font-bold tracking-tight flex items-center justify-center gap-2 text-white mb-4"
+          >
+            <Sparkles className="text-yellow-400 animate-pulse" />
+            Smart Solutions for a Connected World
+            <Sparkles className="text-yellow-400 animate-pulse" />
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <ProductsSection />
+            <ServicesSection />
+            <EngineeringServicesSection />
+            <ContactSection />
+          </div>
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <ProductsSection />
-          <ServicesSection />
-          <EngineeringServicesSection />
-          <ContactSection />
-        </div>
-      </motion.div>
-    </div>
+      </div>
+    </>
   );
 }
