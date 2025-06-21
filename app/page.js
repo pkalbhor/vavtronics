@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Rocket, Wrench, Phone, Layers, Cpu } from "lucide-react";
 import * as motion from "framer-motion/client";
 import TopNavBar from "@/components/TopNavBar"; // <-- Import the TopNavBar
+import Link from "next/link";
 
 // Placeholder AI photo URLs (replace with your own AI-generated images if desired)
 const aiPhotos = {
@@ -100,9 +101,11 @@ function ContactSection() {
             Email: <a href="mailto:info@example.com" className="underline text-pink-200">info@vavtronics.com</a><br />
             Phone: <span className="text-pink-200">+91 9876543210</span>
           </div>
-          <Button className="bg-pink-500 hover:bg-pink-600 rounded-full px-6 py-2 text-white text-md mt-2">
-            <Rocket className="mr-2 h-4 w-4" /> Get in Touch
-          </Button>
+          <Link href="/contact" passHref>
+            <Button className="bg-pink-500 hover:bg-pink-600 rounded-full px-6 py-2 text-white text-md mt-2">
+              <Rocket className="mr-2 h-4 w-4" /> Get in Touch
+            </Button>
+          </Link>
         </motion.div>
       </CardContent>
     </Card>

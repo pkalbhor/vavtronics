@@ -9,7 +9,7 @@ export default function TopNavBar() {
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
           {/* Stylized V logo */}
-          <Link href="" >
+          <Link href="/" >
           <span
             className="h-12 w-12 flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-purple-600 text-white font-extrabold text-3xl shadow-lg"
             style={{ fontFamily: "Montserrat, Arial, sans-serif", letterSpacing: "-0.05em" }}
@@ -28,19 +28,16 @@ export default function TopNavBar() {
           <Link href="/" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
             Home
           </Link>
-          <Link href="#products" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
+          <Link href="products" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
             Products
           </Link>
-          <Link href="#services" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
+          <Link href="services" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
             Services
-          </Link>
-          <Link href="contact" className="text-indigo-700 hover:text-indigo-900 font-medium transition-colors">
-            Contact
           </Link>
         </div>
         {/* Contact Button */}
         <div>
-          <Link href="#contact">
+          <Link href="contact">
             <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-5 py-2 text-sm font-semibold shadow">
               Contact Us
             </Button>
