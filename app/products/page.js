@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import TopNavBar from "@/components/TopNavBar"; // Import the TopNavBar component
 import BMSProductCard from "@/components/BMSProductCard"; // Import the BMSProductCard component

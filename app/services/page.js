@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import TopNavBar from "@/components/TopNavBar";
 import BMSInterlockingServiceCard from "../../components/BMSInterlockingServiceCard";
