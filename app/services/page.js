@@ -1,6 +1,6 @@
 import React from "react";
 import TopNavBar from "@/components/TopNavBar";
-import BMSInterlockingServiceCard from "./BMSInterlockingServiceCard";
+import BMSInterlockingServiceCard from "../../components/BMSInterlockingServiceCard";
 
 export default function ServicesPage() {
   return (

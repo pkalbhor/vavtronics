@@ -24,7 +24,9 @@ function ProductsSection() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center"
         >
-          <img src={"./images/bms-14s-1.png"} alt="AI Product" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-indigo-400 shadow-lg" />
+          <Link href="/products" passHref>
+            <img src={"./images/bms-14s-1.png"} alt="AI Product" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-indigo-400 shadow-lg" />
+          </Link>
           <div className="text-2xl font-bold flex items-center gap-2">
             <Cpu className="text-indigo-300" /> Products
           </div>
@@ -47,7 +49,9 @@ function ServicesSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-col items-center"
         >
-          <img src={aiPhotos.service} alt="AI Service" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-purple-400 shadow-lg" />
+          <Link href="/services" passHref>
+            <img src={aiPhotos.service} alt="AI Service" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-purple-400 shadow-lg" />
+          </Link>
           <div className="text-2xl font-bold flex items-center gap-2">
             <Layers className="text-purple-300" /> Services
           </div>
@@ -99,7 +103,7 @@ function ContactSection() {
           </div>
           <div className="text-lg mt-2">
             Email: <a href="mailto:info@example.com" className="underline text-pink-200">info@vavtronics.com</a><br />
-            Phone: <span className="text-pink-200">+91 9876543210</span>
+            Phone: <span className="text-pink-200">+91 93557 18377</span>
           </div>
           <Link href="/contact" passHref>
             <Button className="bg-pink-500 hover:bg-pink-600 rounded-full px-6 py-2 text-white text-md mt-2">
