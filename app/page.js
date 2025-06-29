@@ -24,7 +24,7 @@ function ProductsSection() {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center"
         >
-          <img src={aiPhotos.product} alt="AI Product" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-indigo-400 shadow-lg" />
+          <img src={"./images/bms-14s-1.png"} alt="AI Product" className="w-24 h-24 rounded-full object-cover mb-2 border-4 border-indigo-400 shadow-lg" />
           <div className="text-2xl font-bold flex items-center gap-2">
             <Cpu className="text-indigo-300" /> Products
           </div>
