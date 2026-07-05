@@ -1,0 +1,13 @@
+{
+  "name": "vavtronics-functions",
+  "description": "Cloud Functions for VAVTRONICS website",
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "firebase-functions": "^6.1.0",
+    "nodemailer": "^7.0.4"
+  },
+  "private": true
+}

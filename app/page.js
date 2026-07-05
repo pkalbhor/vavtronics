@@ -1,250 +1,322 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import {
   ArrowRight,
   BatteryCharging,
   CircuitBoard,
   Cpu,
   Gauge,
-  Layers,
-  Mail,
-  Phone,
   Shield,
+  Thermometer,
   Wrench,
   Zap,
 } from "lucide-react";
-import * as motion from "framer-motion/client";
 import TopNavBar from "@/components/TopNavBar";
+import SiteFooter from "@/components/SiteFooter";
 
-function SectionCard({ children }) {
-  return (
-    <Card className="bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow rounded-2xl">
-      <CardContent className="p-6 sm:p-8">{children}</CardContent>
-    </Card>
-  );
-}
+const stats = [
+  { label: "Max Pack Capacity", value: "2.88 kWh" },
+  { label: "Peak Discharge", value: "100 A" },
+  { label: "Operating Range", value: "−20 to +60 °C" },
+  { label: "Protection Layers", value: "5+" },
+];
 
-function TileHeader({ icon: Icon, title }) {
-  return (
-    <div className="flex items-center gap-3 mb-3">
-      <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100">
-        <Icon className="h-5 w-5" />
-      </span>
-      <h3 className="text-lg sm:text-xl font-semibold text-slate-900">{title}</h3>
-    </div>
-  );
-}
+const capabilities = [
+  {
+    icon: Cpu,
+    title: "Battery Management Systems",
+    desc: "Precision BMS electronics with cell balancing, CAN & Bluetooth telemetry, and multi-layer protection for lithium packs.",
+    tags: ["14S–20S", "CAN · BLE", "Passive & Active Balancing"],
+    href: "/products",
+    cta: "View products",
+  },
+  {
+    icon: BatteryCharging,
+    title: "Custom Li-ion Battery Packs",
+    desc: "Laser-welded LFP and NMC packs from 48 V to 72 V, engineered for LEVs, e-motorcycles, and stationary storage.",
+    tags: ["LFP · NMC", "48–72 V", "IP-rated Housing"],
+    href: "/products",
+    cta: "Explore packs",
+  },
+  {
+    icon: Shield,
+    title: "Interlocking Systems",
+    desc: "Fail-safe industrial interlocks — mechanical, electrical, and software — integrated with SCADA, PLC, and IoT platforms.",
+    tags: ["SIL / ISO 13849", "SCADA · PLC", "Retrofit Ready"],
+    href: "/services",
+    cta: "View services",
+  },
+  {
+    icon: Wrench,
+    title: "Engineering Services",
+    desc: "Cell selection, pack architecture, BMS tuning, enclosure design — turnkey delivery tailored to your requirements.",
+    tags: ["Consulting", "Prototyping", "Turnkey"],
+    href: "/contact",
+    cta: "Discuss your project",
+  },
+];
 
-function TagPills({ tags }) {
-  return (
-    <div className="flex flex-wrap gap-2 mb-5">
-      {tags.map((t) => (
-        <span
-          key={t}
-          className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-medium px-3 py-1"
-        >
-          {t}
-        </span>
-      ))}
-    </div>
-  );
-}
+const packHighlights = [
+  { icon: Zap, label: "Voltage", value: "51.2 V / 72 V" },
+  { icon: Gauge, label: "Capacity", value: "up to 2.88 kWh" },
+  { icon: CircuitBoard, label: "Chemistry", value: "LFP / NMC" },
+  { icon: Thermometer, label: "Operating Temp", value: "−20 to +60 °C" },
+];
 
-function ProductsSection() {
+function Eyebrow({ children, light = false }) {
   return (
-    <SectionCard>
-      <TileHeader icon={Cpu} title="Products" />
-      <p className="text-sm text-slate-600 leading-relaxed mb-4">
-        Advanced Battery Management Systems, custom Li-ion battery packs, and
-        IoT solutions for battery fleet monitoring.
-      </p>
-      <TagPills tags={["BMS", "Battery Packs", "IoT"]} />
-      <Link
-        href="/products"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
-      >
-        View products <ArrowRight className="h-4 w-4" />
-      </Link>
-    </SectionCard>
-  );
-}
-
-function ServicesSection() {
-  return (
-    <SectionCard>
-      <TileHeader icon={Layers} title="Services" />
-      <p className="text-sm text-slate-600 leading-relaxed mb-4">
-        Software solutions and interlocking systems for battery testing and
-        automotive processes — engineered for safety and scale.
-      </p>
-      <TagPills tags={["Software", "Interlocking", "Automation"]} />
-      <Link
-        href="/services"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
-      >
-        View services <ArrowRight className="h-4 w-4" />
-      </Link>
-    </SectionCard>
-  );
-}
-
-function EngineeringServicesSection() {
-  return (
-    <SectionCard>
-      <TileHeader icon={Wrench} title="Engineering Services" />
-      <p className="text-sm text-slate-600 leading-relaxed mb-4">
-        Expert engineering consultation, prototyping, and turnkey delivery
-        tailored to your product and manufacturing requirements.
-      </p>
-      <TagPills tags={["Consulting", "Prototyping", "Turnkey"]} />
-      <Link
-        href="/contact"
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
-      >
-        Discuss your project <ArrowRight className="h-4 w-4" />
-      </Link>
-    </SectionCard>
-  );
-}
-
-function ContactSection() {
-  return (
-    <SectionCard>
-      <TileHeader icon={Phone} title="Contact" />
-      <ul className="space-y-2 text-sm text-slate-700 mb-5">
-        <li className="flex items-center gap-2">
-          <Mail className="h-4 w-4 text-slate-400" />
-          <a
-            href="mailto:info@vavtronics.com"
-            className="text-indigo-600 hover:text-indigo-700"
-          >
-            info@vavtronics.com
-          </a>
-        </li>
-        <li className="flex items-center gap-2">
-          <Phone className="h-4 w-4 text-slate-400" />
-          <span>+91 93557 18377</span>
-        </li>
-      </ul>
-      <Link href="/contact">
-        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-5 py-2 text-sm font-semibold shadow-sm">
-          Get in Touch
-        </Button>
-      </Link>
-    </SectionCard>
-  );
-}
-
-function BatteryPackVisual() {
-  const cols = 8;
-  const rows = 4;
-  const cellR = 6;
-  const gap = 18;
-  const startX = 34;
-  const startY = 58;
-  return (
-    <svg
-      viewBox="0 0 240 200"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full max-w-[280px] drop-shadow-md"
-      role="img"
-      aria-label="Vavtronics 14S4P Li-ion battery pack"
+    <div
+      className={`inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] ${
+        light ? "text-slate-400" : "text-slate-500"
+      }`}
     >
-      <defs>
-        <linearGradient id="bpCase" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#1e293b" />
-          <stop offset="100%" stopColor="#0b1220" />
-        </linearGradient>
-        <linearGradient id="bpCell" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#cbd5e1" />
-          <stop offset="45%" stopColor="#f1f5f9" />
-          <stop offset="100%" stopColor="#64748b" />
-        </linearGradient>
-      </defs>
-      <rect x="46" y="22" width="26" height="14" rx="3" fill="#ef4444" />
-      <text x="59" y="33" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff" fontFamily="monospace">+</text>
-      <rect x="168" y="22" width="26" height="14" rx="3" fill="#475569" />
-      <text x="181" y="33" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff" fontFamily="monospace">−</text>
-      <rect x="20" y="36" width="200" height="146" rx="12" fill="url(#bpCase)" stroke="#334155" strokeWidth="2" />
-      {Array.from({ length: rows }).map((_, r) =>
-        Array.from({ length: cols }).map((__, c) => {
-          const cx = startX + c * gap;
-          const cy = startY + r * gap;
-          return (
-            <g key={`${r}-${c}`}>
-              <circle cx={cx} cy={cy} r={cellR} fill="url(#bpCell)" stroke="#334155" strokeWidth="0.8" />
-              <circle cx={cx} cy={cy} r={cellR - 3} fill="#0f172a" opacity="0.35" />
-            </g>
-          );
-        })
-      )}
-      <rect x="60" y="152" width="120" height="20" rx="4" fill="#0f172a" stroke="#1e293b" strokeWidth="1" />
-      <text x="120" y="165" textAnchor="middle" fontSize="8.5" fill="#94a3b8" fontFamily="monospace" letterSpacing="2">
-        VAVTRONICS · 14S4P
-      </text>
-    </svg>
-  );
-}
-
-function TrailerStat({ icon: Icon, label, value }) {
-  return (
-    <div className="flex items-start gap-2.5 rounded-lg bg-slate-50 border border-slate-100 p-3">
-      <Icon className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
-      <div className="min-w-0">
-        <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500">
-          {label}
-        </div>
-        <div className="text-sm font-medium text-slate-900">{value}</div>
-      </div>
+      <span className="h-1.5 w-1.5 rounded-full bg-red-600" />
+      {children}
     </div>
   );
 }
 
-function BatteryPackTrailer() {
+function Hero() {
   return (
-    <motion.div
-      initial={{ y: 20, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: 0.15 }}
-      className="w-full"
-    >
-      <div className="overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm">
-        <div className="grid grid-cols-1 md:grid-cols-5 items-center">
-          <div className="md:col-span-2 flex items-center justify-center p-6 sm:p-8 bg-gradient-to-br from-slate-50 to-indigo-50">
-            <BatteryPackVisual />
-          </div>
-          <div className="md:col-span-3 p-6 sm:p-8 flex flex-col gap-4">
-            <div className="inline-flex items-center gap-2 self-start rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em]">
-              <BatteryCharging className="h-3.5 w-3.5" /> New · Battery Packs
+    <section className="relative bg-slate-950 overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #64748b 1px, transparent 1px), linear-gradient(to bottom, #64748b 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
+        }}
+      />
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-16 sm:pt-32 sm:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="fade-up">
+            <Eyebrow light>Battery Technology · Made in India</Eyebrow>
+            <h1 className="mt-5 text-4xl sm:text-5xl lg:text-[3.4rem] font-bold tracking-tight text-white leading-[1.08]">
+              Power systems engineered for{" "}
+              <span className="text-red-500">reliability</span>
+            </h1>
+            <p className="mt-6 text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl">
+              VAVTRONICS designs and manufactures Battery Management Systems,
+              custom Li-ion battery packs, and industrial safety systems that
+              power dependable electrification — from light EVs to stationary
+              storage.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/products"
+                className="inline-flex items-center gap-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3 text-sm transition-colors"
+              >
+                Explore Products <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center rounded-lg border border-slate-700 text-slate-200 hover:bg-slate-900 hover:border-slate-600 font-semibold px-6 py-3 text-sm transition-colors"
+              >
+                Talk to an Engineer
+              </Link>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
-              Custom Li-ion Battery Packs — 14S4P &amp; 20S8P
-            </h3>
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
+          </div>
+
+          <div className="fade-up-delay relative">
+            <div className="rounded-2xl bg-white p-6 sm:p-8 shadow-2xl ring-1 ring-white/10">
+              <Image
+                src="/images/battery-pack-front.jpg"
+                alt="VAVTRONICS Li-ion battery pack with integrated BMS"
+                width={1600}
+                height={935}
+                priority
+                className="w-full h-auto object-contain"
+              />
+              <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+                <div>
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500">
+                    Featured Product
+                  </div>
+                  <div className="text-sm font-semibold text-slate-900">
+                    Li-ion Battery Pack · Integrated BMS
+                  </div>
+                </div>
+                <Link
+                  href="/products"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 hover:text-red-700"
+                >
+                  Details <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-px rounded-2xl overflow-hidden border border-slate-800 bg-slate-800">
+          {stats.map((s) => (
+            <div key={s.label} className="bg-slate-950 px-6 py-5">
+              <div className="text-2xl font-bold text-white">{s.value}</div>
+              <div className="mt-1 text-xs uppercase tracking-[0.12em] text-slate-500 font-medium">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Capabilities() {
+  return (
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div className="max-w-2xl mb-12">
+        <Eyebrow>What we do</Eyebrow>
+        <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-slate-950">
+          From cell to system, under one roof
+        </h2>
+        <p className="mt-4 text-slate-600 leading-relaxed">
+          Electronics, energy storage, and safety engineering — designed,
+          built, and validated in-house.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {capabilities.map((c) => {
+          const Icon = c.icon;
+          return (
+            <div
+              key={c.title}
+              className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 sm:p-8 transition-all hover:border-slate-300 hover:shadow-lg"
+            >
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-slate-950 text-white mb-5">
+                <Icon className="h-5 w-5" />
+              </span>
+              <h3 className="text-lg font-semibold text-slate-950">{c.title}</h3>
+              <p className="mt-2.5 text-sm text-slate-600 leading-relaxed">
+                {c.desc}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {c.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="inline-flex items-center rounded-md bg-slate-100 text-slate-600 text-xs font-medium px-2.5 py-1"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <Link
+                href={c.href}
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-red-600 group-hover:gap-2.5 transition-all"
+              >
+                {c.cta} <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FeaturedPack() {
+  return (
+    <section className="bg-slate-50 border-y border-slate-200">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <Eyebrow>New · Battery Packs</Eyebrow>
+            <h2 className="mt-4 text-3xl sm:text-4xl font-bold tracking-tight text-slate-950 leading-tight">
+              Custom Li-ion battery packs — 16S8P &amp; 20S8P
+            </h2>
+            <p className="mt-5 text-slate-600 leading-relaxed">
               Engineered for LEVs, e-motorcycles, and stationary storage — with
               integrated BMS, laser-welded interconnects, and industrial-grade
-              housing.
+              powder-coated steel housing.
             </p>
-            <div className="grid grid-cols-2 gap-2.5 mt-1">
-              <TrailerStat icon={Zap} label="Voltage" value="52 V – 72 V" />
-              <TrailerStat icon={Gauge} label="Capacity" value="up to 2.88 kWh" />
-              <TrailerStat icon={CircuitBoard} label="Chemistry" value="Li-ion NMC / LFP" />
-              <TrailerStat icon={Shield} label="Safety" value="Multi-layer BMS" />
+            <div className="mt-7 grid grid-cols-2 gap-3">
+              {packHighlights.map((h) => {
+                const Icon = h.icon;
+                return (
+                  <div
+                    key={h.label}
+                    className="flex items-start gap-3 rounded-xl bg-white border border-slate-200 p-4"
+                  >
+                    <Icon className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                        {h.label}
+                      </div>
+                      <div className="text-sm font-semibold text-slate-900 mt-0.5">
+                        {h.value}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             <Link
               href="/products"
-              className="mt-2 inline-flex items-center gap-2 self-start rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 text-sm shadow-sm transition-colors"
+              className="mt-8 inline-flex items-center gap-2 rounded-lg bg-slate-950 hover:bg-slate-800 text-white font-semibold px-6 py-3 text-sm transition-colors"
             >
               Explore Battery Packs <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
+
+          <div className="rounded-2xl bg-white border border-slate-200 p-6 sm:p-8 shadow-sm">
+            <Image
+              src="/images/battery-pack-views.jpg"
+              alt="VAVTRONICS battery pack — front, side, top, and rear views"
+              width={1536}
+              height={1024}
+              className="w-full h-auto object-contain"
+            />
+            <div className="mt-4 border-t border-slate-100 pt-4 text-xs text-slate-500 text-center uppercase tracking-[0.14em] font-medium">
+              Engineering views · steel enclosure · flange mounting
+            </div>
+          </div>
         </div>
       </div>
-    </motion.div>
+    </section>
+  );
+}
+
+function ContactBand() {
+  return (
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div className="relative overflow-hidden rounded-3xl bg-slate-950 px-6 py-14 sm:px-16 sm:py-16 text-center">
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #64748b 1px, transparent 1px), linear-gradient(to bottom, #64748b 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <div className="relative">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            Have a project in mind?
+          </h2>
+          <p className="mt-4 text-slate-400 max-w-xl mx-auto leading-relaxed">
+            From a single BMS board to a complete battery system — tell us your
+            voltage, capacity, and form-factor requirements and we&apos;ll take
+            it from there.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-lg bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3 text-sm transition-colors"
+            >
+              Get in Touch <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="mailto:info@vavtronics.com"
+              className="inline-flex items-center rounded-lg border border-slate-700 text-slate-200 hover:bg-slate-900 font-semibold px-6 py-3 text-sm transition-colors"
+            >
+              info@vavtronics.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -252,54 +324,13 @@ export default function Home() {
   return (
     <>
       <TopNavBar />
-      <main className="min-h-screen bg-slate-50 pt-20">
-        <section className="border-b border-slate-200 bg-white">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] mb-5">
-              Vavtronics
-            </div>
-            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900">
-              Smart Solutions for a Connected World
-            </h1>
-            <p className="mt-4 text-slate-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              We design and manufacture Battery Management Systems, Li-ion
-              battery packs, and IoT platforms that power reliable
-              electrification.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3 justify-center">
-              <Link href="/products">
-                <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full px-6 py-2.5 text-sm font-semibold shadow-sm">
-                  Explore Products
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button className="bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 rounded-full px-6 py-2.5 text-sm font-semibold shadow-sm">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            <ProductsSection />
-            <ServicesSection />
-            <EngineeringServicesSection />
-            <ContactSection />
-          </motion.div>
-        </section>
-
-        <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-20">
-          <BatteryPackTrailer />
-        </section>
+      <main className="min-h-screen bg-white">
+        <Hero />
+        <Capabilities />
+        <FeaturedPack />
+        <ContactBand />
       </main>
+      <SiteFooter />
     </>
   );
 }

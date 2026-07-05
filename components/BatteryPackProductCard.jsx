@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import {
   Battery,
   Zap,
@@ -8,128 +9,174 @@ import {
   Thermometer,
   Ruler,
   Weight,
-  Layers,
   CircuitBoard,
   Scale,
+  CheckCircle2,
 } from "lucide-react";
+
+const gallery = [
+  {
+    src: "/images/battery-pack-front.jpg",
+    alt: "VAVTRONICS Li-ion battery pack — front view with power connectors",
+    caption: "Front view · sealed steel enclosure",
+  },
+  {
+    src: "/images/battery-pack-views.jpg",
+    alt: "VAVTRONICS Li-ion battery pack — front, side, top, and rear engineering views",
+    caption: "Engineering views · flange mounting points",
+  },
+];
+
+const platformFeatures = [
+  "Integrated BMS with multi-layer protection",
+  "Laser-welded nickel interconnects",
+  "Powder-coated steel enclosure with mounting flanges",
+  "Keyed high-current connectors (+ / −)",
+  "CAN & Bluetooth telemetry ready",
+];
 
 const models = [
   {
-    id: "14S4P",
-    partNo: "VT-BP52-14S4P",
+    id: "16S8P",
+    partNo: "VT-BP52-16S8P",
+    voltageClass: "52 V Class",
     tagline:
-      "52 V Li-ion battery pack engineered for light electric vehicles and portable power applications.",
-    accent: "from-indigo-500 to-purple-600",
-    badgeBg: "bg-indigo-50",
-    badgeText: "text-indigo-700",
-    badgeBorder: "border-indigo-100",
-    highlights: [
-      { icon: Zap, label: "Nominal Voltage", value: "51.8 V" },
-      { icon: Gauge, label: "Capacity", value: "10.4 Ah · 540 Wh" },
-      { icon: Battery, label: "Configuration", value: "14S4P" },
-      { icon: CircuitBoard, label: "Cell Type", value: "18650 / 21700 Li-ion(NMC)" },
+      "52 V LFP battery pack engineered for light electric vehicles and portable power applications.",
+    specs: [
+      { icon: Zap, label: "Nominal Voltage", value: "51.2 V" },
+      { icon: Gauge, label: "Capacity", value: "40 Ah · 2 kWh" },
+      { icon: Battery, label: "Configuration", value: "16S8P" },
+      { icon: CircuitBoard, label: "Cell Type", value: "Li-ion (LFP)" },
       { icon: Scale, label: "Balancing", value: "Passive, per cell" },
       { icon: Shield, label: "Protections", value: "OCP · OVP · UVP · SCP · OTP" },
-      { icon: Thermometer, label: "Operating Temp", value: "-20 °C to +60 °C" },
+      { icon: Thermometer, label: "Operating Temp", value: "−20 °C to +60 °C" },
       { icon: Ruler, label: "Dimensions", value: "360 × 150 × 90 mm" },
-      { icon: Weight, label: "Weight", value: "≈ 20.8 kg" },
+      { icon: Weight, label: "Weight", value: "≈ 30.8 kg" },
     ],
     applications: ["E-bikes", "E-scooters", "Delivery LEVs", "Portable power"],
   },
   {
     id: "20S8P",
     partNo: "VT-BP72-20S8P",
+    voltageClass: "72 V Class",
     tagline:
-      "72 V high-capacity pack for e-motorcycles, light EVs, and stationary energy-storage systems.",
-    accent: "from-slate-600 to-indigo-600",
-    badgeBg: "bg-slate-50",
-    badgeText: "text-slate-700",
-    badgeBorder: "border-slate-200",
-    highlights: [
+      "72 V high-capacity NMC pack for e-motorcycles, light EVs, and stationary energy-storage systems.",
+    specs: [
       { icon: Zap, label: "Nominal Voltage", value: "72 V" },
       { icon: Gauge, label: "Capacity", value: "40 Ah · 2.88 kWh" },
       { icon: Battery, label: "Configuration", value: "20S8P" },
       { icon: CircuitBoard, label: "Cell Type", value: "21700 Li-ion (NMC)" },
       { icon: Scale, label: "Balancing", value: "Active + Passive" },
       { icon: Shield, label: "Protections", value: "OCP · OVP · UVP · SCP · OTP · Bal." },
-      { icon: Thermometer, label: "Operating Temp", value: "-20 °C to +60 °C" },
+      { icon: Thermometer, label: "Operating Temp", value: "−20 °C to +60 °C" },
       { icon: Ruler, label: "Dimensions", value: "420 × 260 × 180 mm" },
-      { icon: Weight, label: "Weight", value: "≈ 25 kg" },
+      { icon: Weight, label: "Weight", value: "≈ 45 kg" },
     ],
     applications: ["E-motorcycles", "Light EVs", "Stationary storage", "Solar hybrid"],
   },
 ];
 
-function ModelCard({ model, delay }) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), delay);
-    return () => clearTimeout(t);
-  }, [delay]);
-
+function Gallery() {
+  const [active, setActive] = useState(0);
+  const current = gallery[active];
   return (
-    <div
-      className={`${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      } transition-all duration-700 ease-out relative bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 flex flex-col overflow-hidden`}
-    >
-      <div className={`h-1 w-full bg-gradient-to-r ${model.accent}`} />
+    <div>
+      <div className="rounded-xl bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200 p-5 sm:p-7">
+        <Image
+          src={current.src}
+          alt={current.alt}
+          width={1600}
+          height={1000}
+          className="w-full h-auto object-contain"
+        />
+      </div>
+      <div className="mt-2.5 text-xs text-slate-500 text-center font-medium uppercase tracking-[0.12em]">
+        {current.caption}
+      </div>
+      <div className="mt-4 flex justify-center gap-3">
+        {gallery.map((img, i) => (
+          <button
+            key={img.src}
+            onClick={() => setActive(i)}
+            aria-label={`Show ${img.caption}`}
+            className={`w-24 rounded-lg border-2 bg-white p-1.5 transition-all ${
+              i === active
+                ? "border-red-600 shadow-sm"
+                : "border-slate-200 opacity-60 hover:opacity-100 hover:border-slate-300"
+            }`}
+          >
+            <Image
+              src={img.src}
+              alt=""
+              width={200}
+              height={125}
+              className="w-full h-auto object-contain"
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SpecTable({ specs }) {
+  return (
+    <dl className="divide-y divide-slate-100 border-y border-slate-100">
+      {specs.map((s) => {
+        const Icon = s.icon;
+        return (
+          <div key={s.label} className="flex items-center gap-3 py-2.5">
+            <Icon className="h-4 w-4 text-red-600 shrink-0" />
+            <dt className="text-xs font-medium uppercase tracking-[0.08em] text-slate-500 w-36 shrink-0">
+              {s.label}
+            </dt>
+            <dd className="text-sm font-semibold text-slate-900 text-right flex-1">
+              {s.value}
+            </dd>
+          </div>
+        );
+      })}
+    </dl>
+  );
+}
+
+function ModelCard({ model }) {
+  return (
+    <div className="flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden transition-all hover:border-slate-300 hover:shadow-lg">
       <div className="p-6 sm:p-8 flex flex-col gap-6 flex-1">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-2">
-              <Layers className="h-3.5 w-3.5" /> Battery Pack Model
+            <div className="inline-flex items-center rounded-md bg-red-50 border border-red-100 text-red-700 text-[11px] font-semibold uppercase tracking-[0.12em] px-2.5 py-1 mb-3">
+              {model.voltageClass}
             </div>
-            <h3 className="text-3xl font-bold text-slate-900 leading-tight">
+            <h3 className="text-3xl font-bold text-slate-950 leading-tight">
               {model.id}
             </h3>
             <p className="text-sm text-slate-500 font-mono mt-1">{model.partNo}</p>
           </div>
-          <div
-            className={`h-14 w-14 rounded-xl bg-gradient-to-br ${model.accent} flex items-center justify-center shadow-md text-white shrink-0`}
-          >
-            <Battery className="h-7 w-7" />
+          <div className="h-12 w-12 rounded-xl bg-slate-950 flex items-center justify-center text-white shrink-0">
+            <Battery className="h-6 w-6" />
           </div>
         </div>
 
-        <p className="text-slate-700 text-sm leading-relaxed">{model.tagline}</p>
+        <p className="text-slate-600 text-sm leading-relaxed">{model.tagline}</p>
 
         <div>
           <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-3">
             Specifications
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {model.highlights.map((h, i) => {
-              const Icon = h.icon;
-              return (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 bg-slate-50 rounded-lg p-3 border border-slate-100"
-                >
-                  <Icon className="h-4 w-4 text-indigo-600 shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                      {h.label}
-                    </div>
-                    <div className="text-sm font-medium text-slate-900">
-                      {h.value}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <SpecTable specs={model.specs} />
         </div>
 
         <div className="mt-auto">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-2">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-2.5">
             Applications
           </div>
           <div className="flex flex-wrap gap-2">
-            {model.applications.map((a, i) => (
+            {model.applications.map((a) => (
               <span
-                key={i}
-                className={`inline-flex items-center rounded-full ${model.badgeBg} border ${model.badgeBorder} ${model.badgeText} text-xs font-medium px-3 py-1`}
+                key={a}
+                className="inline-flex items-center rounded-md bg-slate-100 text-slate-700 text-xs font-medium px-2.5 py-1"
               >
                 {a}
               </span>
@@ -143,24 +190,52 @@ function ModelCard({ model, delay }) {
 
 export default function BatteryPackProductCard() {
   return (
-    <section className="w-full max-w-6xl mx-auto">
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.15em] mb-4">
-          <Battery className="h-3.5 w-3.5" /> Product Line
+    <section className="w-full max-w-6xl mx-auto" id="battery-packs">
+      <div className="max-w-2xl mb-10">
+        <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500 mb-4">
+          <span className="h-1.5 w-1.5 rounded-full bg-red-600" />
+          Product Line · Energy Storage
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-950">
           Custom Li-ion Battery Packs
         </h2>
-        <p className="text-slate-600 max-w-2xl mx-auto mt-3 text-sm sm:text-base leading-relaxed">
+        <p className="text-slate-600 mt-4 leading-relaxed">
           Engineered for reliability, safety, and long service life. Every pack
           ships with an integrated BMS, laser-welded nickel interconnects, and
-          industrial-grade protective housing.
+          an industrial-grade protective housing.
         </p>
       </div>
 
+      <div className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-10 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+          <Gallery />
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.15em] text-slate-500 mb-4">
+              Pack Platform
+            </div>
+            <h3 className="text-2xl font-bold text-slate-950 mb-4">
+              One platform, two voltage classes
+            </h3>
+            <p className="text-sm text-slate-600 leading-relaxed mb-6">
+              Both packs share the same validated mechanical and electrical
+              platform — a sealed steel enclosure with flange mounting, keyed
+              high-current connectors, and a VAVTRONICS BMS at the core.
+            </p>
+            <ul className="space-y-3">
+              {platformFeatures.map((f) => (
+                <li key={f} className="flex items-start gap-3 text-sm text-slate-700">
+                  <CheckCircle2 className="h-4 w-4 text-red-600 shrink-0 mt-0.5" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {models.map((m, i) => (
-          <ModelCard key={m.id} model={m} delay={i * 150} />
+        {models.map((m) => (
+          <ModelCard key={m.id} model={m} />
         ))}
       </div>
     </section>

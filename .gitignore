@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# functions/.env holds non-secret deploy config (SMTP host/user) — keep it
+!functions/.env
+functions/node_modules/
 
 # vercel
 .vercel

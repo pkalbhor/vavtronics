@@ -15,11 +15,14 @@ export async function POST(request) {
       },
     });
 
-    // Compose the email
+    // Compose the email. Most SMTP relays (GoDaddy included) reject mail
+    // whose From is not the authenticated mailbox — send from ourselves
+    // and set Reply-To to the visitor.
     await transporter.sendMail({
-      from: `"${name}" <${email}>`,
+      from: `"VAVTRONICS Website" <${process.env.SMTP_USER}>`,
+      replyTo: `"${name}" <${email}>`,
       to: process.env.CONTACT_RECEIVER_EMAIL, // Company address
-      subject: "New Contact Form Submission",
+      subject: `New contact form submission from ${name}`,
       text: `
         Name: ${name}
         Email: ${email}
